@@ -1,0 +1,10 @@
+--- a/servers/slapd/slapi/Makefile.in	2025-08-08 01:19:20.761319956 +0200
++++ b/servers/slapd/slapi/Makefile.in	2025-08-08 01:19:55.933815206 +0200
+@@ -37,6 +37,7 @@
+ XXLIBS = 
+ MOD_LIBS = $(MODULES_LIBS)
+ NT_LINK_LIBS = $(AC_LIBS) -L.. -lslapd $(@BUILD_LIBS_DYNAMIC@_LDAP_LIBS)
++UNIX_LINK_LIBS = $(AC_LIBS) $(SECURITY_LIBS) $(LTHREAD_LIBS)
+ 
+ XINCPATH = -I$(srcdir)/.. -I$(srcdir)
+ XDEFS = $(MODULES_CPPFLAGS)
