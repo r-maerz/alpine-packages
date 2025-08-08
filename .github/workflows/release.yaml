@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ivanvc/abuild-releaser-action@main
         with:
-          author: Robert Maerz <171489683+r-maerz@users.noreply.github.com>
+          author: "Robert Maerz <171489683+r-maerz@users.noreply.github.com>"
           rsa_public_key: ${{ secrets.RSA_PUBLIC_KEY }}
           rsa_private_key: ${{ secrets.RSA_PRIVATE_KEY }}
           package_dirs: "main/*"
-          alpine_branch: v3.22
+          alpine_branch: "latest-stable"
