@@ -1,3 +1,4 @@
+# Contributor: Robert Maerz <171489683+r-maerz@users.noreply.github.com>
 # Contributor: Jakub Jirutka <jakub@jirutka.cz>
 # Maintainer: Natanael Copa <ncopa@alpinelinux.org>
 #
@@ -41,350 +42,359 @@ license="OLDAP-2.8"
 pkgusers="ldap"
 pkggroups="ldap"
 depends_dev="
-	cyrus-sasl-dev
-	libevent-dev
-	libsodium-dev
-	util-linux-dev
-	"
+    cyrus-sasl-dev
+    libevent-dev
+    libsodium-dev
+    util-linux-dev
+    "
 makedepends="
-	$depends_dev
-	argon2-dev
-	autoconf
-	automake
-	db-dev
-	groff
-	heimdal-dev
-	libtool
-	mosquitto-dev
-	openssl-dev
-	unixodbc-dev
-	perl
-	perl-dev
-	"
+    $depends_dev
+    argon2-dev
+    autoconf
+    automake
+    db-dev
+    groff
+    heimdal-dev
+    libtool
+    mosquitto-dev
+    openssl-dev
+    unixodbc-dev
+    perl
+    perl-dev
+    "
 provides="$pkgname-back-monitor=$pkgver-r$pkgrel"  # for backward compatibility (Alpine <3.15)
 subpackages="
-	$pkgname-dev
-	$pkgname-doc
-	libldap
-	$pkgname-lloadd
-	$pkgname-lloadd-openrc:lloadd_openrc
-	$pkgname-clients
-	$pkgname-passwd-argon2:passwd_argon2
-	$pkgname-passwd-pbkdf2:passwd_pbkdf2
-	$pkgname-passwd-sha2:passwd_sha2
-	$pkgname-backend-all:_backend_all:noarch
-	$pkgname-overlay-all:_overlay_all:noarch
-	$pkgname-openrc
-        $pkgname-slapi
-	"
+    $pkgname-dev
+    $pkgname-doc
+    libldap
+    $pkgname-lloadd
+    $pkgname-lloadd-openrc:lloadd_openrc
+    $pkgname-clients
+    $pkgname-passwd-argon2:passwd_argon2
+    $pkgname-passwd-pbkdf2:passwd_pbkdf2
+    $pkgname-passwd-sha2:passwd_sha2
+    $pkgname-backend-all:_backend_all:noarch
+    $pkgname-overlay-all:_overlay_all:noarch
+    $pkgname-openrc
+    $pkgname-slapi
+    "
 install="
-	$pkgname.pre-install
-	$pkgname.post-install
-	$pkgname.pre-upgrade
-	$pkgname.post-upgrade
-	$pkgname-lloadd.pre-install
-	"
-source="https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-$pkgver.tgz
-	0002-Add-UNIX_LINK_LIBS-to-slapi-Makefile.patch
-	0003-Add-mqtt-overlay.patch
-	0004-Fix-manpages.patch
-	0005-Correct-command-line-syntax-in-lloadd-tests.patch
-	0007-Use-correct-extension-for-slapd-modules.patch
-	0008-Remove-pidfile-and-argsfile.patch
-	0009-Include-more-schemas-in-default-config.patch
-	0010-15331-fix-passwd-sha2.patch
-	0011-switch-to-lt_dlopenadvise-to-get-RTLD_GLOBAL-set.patch
-	0012-64-bit-time-t-compat.patch
+    $pkgname.pre-install
+    $pkgname.post-install
+    $pkgname.pre-upgrade
+    $pkgname.post-upgrade
+    $pkgname-lloadd.pre-install
+    "
+source="
+    https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-$pkgver.tgz
+    0002-Add-UNIX_LINK_LIBS-to-slapi-Makefile.patch
+    0003-Add-mqtt-overlay.patch
+    0004-Fix-manpages.patch
+    0005-Correct-command-line-syntax-in-lloadd-tests.patch
+    0007-Use-correct-extension-for-slapd-modules.patch
+    0008-Remove-pidfile-and-argsfile.patch
+    0009-Include-more-schemas-in-default-config.patch
+    0010-15331-fix-passwd-sha2.patch
+    0011-switch-to-lt_dlopenadvise-to-get-RTLD_GLOBAL-set.patch
+    0012-64-bit-time-t-compat.patch
 
-	lloadd.conf
-	slapd.initd
-	slapd.confd
-	lloadd.initd
-	lloadd.confd
-	"
+    lloadd.conf
+    slapd.initd
+    slapd.confd
+    lloadd.initd
+    lloadd.confd
+    "
 
 # SLAPD backends
 _backends="
-	asyncmeta
-	dnssrv
-	ldap
-	lload
-	mdb
-	meta
-	null
-	passwd
-	perl
-	relay
-	sock
-	sql
-	"
+    asyncmeta
+    dnssrv
+    ldap
+    lload
+    mdb
+    meta
+    null
+    passwd
+    perl
+    relay
+    sock
+    sql
+    "
 for _name in $_backends; do
-	subpackages="$subpackages $pkgname-back-$_name:_backend"
-	_backend_pkgs="$_backend_pkgs $pkgname-back-$_name"
+    subpackages="$subpackages $pkgname-back-$_name:_backend"
+    _backend_pkgs="$_backend_pkgs $pkgname-back-$_name"
 done
 
 # SLAPD overlays
 _overlays="
-	accesslog
-	auditlog
-	autoca
-	autogroup
-	collect
-	constraint
-	dds
-	deref
-	dyngroup
-	dynlist
-	homedir
-	lastbind
-	memberof
-	mqtt
-	nestgroup
-	otp
-	ppolicy
-	proxycache
-	refint
-	remoteauth
-	retcode
-	rwm
-	seqmod
-	smbk5pwd
-	sssvlv
-	syncprov
-	translucent
-	unique
-	valsort
-	"
+    accesslog
+    auditlog
+    autoca
+    autogroup
+    collect
+    constraint
+    dds
+    deref
+    dyngroup
+    dynlist
+    homedir
+    lastbind
+    memberof
+    mqtt
+    nestgroup
+    otp
+    ppolicy
+    proxycache
+    refint
+    remoteauth
+    retcode
+    rwm
+    seqmod
+    smbk5pwd
+    sssvlv
+    syncprov
+    translucent
+    unique
+    valsort
+    "
 for _name in $_overlays; do
-	subpackages="$subpackages $pkgname-overlay-$_name:_overlay"
-	_overlay_pkgs="$_overlay_pkgs $pkgname-overlay-$_name"
+    subpackages="$subpackages $pkgname-overlay-$_name:_overlay"
+    _overlay_pkgs="$_overlay_pkgs $pkgname-overlay-$_name"
 done
 
 # Extra modules from contrib/slapd-modules to build and install.
 _extra_modules="
-	autogroup
-	mqtt
-	passwd/pbkdf2
-	passwd/sha2
-	smbk5pwd
-	lastbind
-	"
+    autogroup
+    mqtt
+    passwd/pbkdf2
+    passwd/sha2
+    smbk5pwd
+    lastbind
+    "
 
 prepare() {
-	default_prepare
+    default_prepare
 
-	sed -i '/^STRIP/s,-s,,g' build/top.mk
-	AUTOMAKE=/bin/true autoreconf -fi
+    sed -i '/^STRIP/s,-s,,g' build/top.mk
+
+    # change rundir to /run/openldap
+    sed -i 's|#define LDAPI_SOCK LDAP_RUNDIR LDAP_DIRSEP "run" LDAP_DIRSEP "ldapi"|#define LDAPI_SOCK LDAP_DIRSEP "run" LDAP_DIRSEP "openldap" LDAP_DIRSEP "ldapi"|' include/ldap_defaults.h
+    sed -i 's|%LOCALSTATEDIR%/run|/run/openldap|' servers/slapd/slapd.conf
+    sed -i 's|%LOCALSTATEDIR%/run|/run/openldap|' servers/slapd/slapd.ldif
+    sed -i 's|-$(MKDIR) $(DESTDIR)$(localstatedir)/run|-$(MKDIR) $(DESTDIR)/run/openldap|' servers/slapd/Makefile.in
+
+    AUTOMAKE=/bin/true autoreconf -fi
 }
 
 build() {
-	_configure \
-		--enable-slapd \
-		--enable-modules \
-		--enable-dnssrv=mod \
-		--enable-ldap=mod \
-		--enable-mdb=mod \
-		--enable-meta=mod \
-		--enable-asyncmeta=mod \
-		--enable-null=mod \
-		--enable-passwd=mod \
-                --enable-perl=mod \
-		--enable-relay=mod \
-		--enable-sock=mod \
-		--enable-sql=mod \
-		--enable-overlays=mod \
-		--enable-balancer=mod \
-		--enable-argon2 \
-		--enable-slapi
-	make
+    _configure \
+        --enable-slapd \
+        --enable-modules \
+        --enable-dnssrv=mod \
+        --enable-ldap=mod \
+        --enable-mdb=mod \
+        --enable-meta=mod \
+        --enable-asyncmeta=mod \
+        --enable-null=mod \
+        --enable-passwd=mod \
+        --enable-perl=mod \
+        --enable-relay=mod \
+        --enable-sock=mod \
+        --enable-sql=mod \
+        --enable-overlays=mod \
+        --enable-balancer=mod \
+        --enable-argon2 \
+        --enable-slapi
 
-	local dir; for dir in $_extra_modules; do
-		msg "Building module $dir"
-		make -C contrib/slapd-modules/$dir prefix=/usr libexecdir=/usr/lib
-	done
+    make
 
-	cp -ar "$builddir" "$builddir-lloadd"
-	cd "$builddir-lloadd"
+    local dir; for dir in $_extra_modules; do
+        msg "Building module $dir"
+        make -C contrib/slapd-modules/$dir prefix=/usr libexecdir=/usr/lib
+    done
 
-	msg "Building standalone lloadd"
-	make -C servers clean
-	_configure \
-		--enable-balancer=yes
-	make
+    cp -ar "$builddir" "$builddir-lloadd"
+    cd "$builddir-lloadd"
+
+    msg "Building standalone lloadd"
+    make -C servers clean
+    _configure \
+        --enable-balancer=yes
+    make
 }
 
 _configure() {
-	./configure \
-		--build=$CBUILD \
-		--host=$CHOST \
-		--prefix=/usr \
-		--libexecdir=/usr/lib \
-		--sysconfdir=/etc \
-		--mandir=/usr/share/man \
-		--localstatedir=/var/lib/openldap \
-		--enable-dynamic \
-		--enable-crypt \
-		--enable-spasswd \
-		--with-tls=openssl \
-		--with-systemd=no \
-		--with-cyrus-sasl \
-		"$@"
+    ./configure \
+        --build=$CBUILD \
+        --host=$CHOST \
+        --prefix=/usr \
+        --libexecdir=/usr/lib \
+        --sysconfdir=/etc \
+        --mandir=/usr/share/man \
+        --localstatedir=/var/lib/openldap \
+        --enable-dynamic \
+        --enable-crypt \
+        --enable-spasswd \
+        --with-tls=openssl \
+        --with-systemd=no \
+        --with-cyrus-sasl \
+        "$@"
 }
 
 check() {
-	case "$CARCH" in
-		# FIXME tests fail
-		s390x) rm tests/scripts/test001-slapadd ;;
-		armhf) rm tests/scripts/test046-dds ;;
-	esac
+    case "$CARCH" in
+        # FIXME tests fail
+        s390x) rm tests/scripts/test001-slapadd ;;
+        armhf) rm tests/scripts/test046-dds ;;
+    esac
 
-	make test
+    make test
 }
 
 package() {
-	make DESTDIR="$pkgdir" install
+    make DESTDIR="$pkgdir" install
 
-	local dir; for dir in $_extra_modules; do
-		make -C contrib/slapd-modules/$dir \
-			DESTDIR="$pkgdir" prefix=/usr libexecdir=/usr/lib install
-	done
+    local dir;
+    for dir in $_extra_modules; do
+        make -C contrib/slapd-modules/$dir \
+        DESTDIR="$pkgdir" prefix=/usr libexecdir=/usr/lib install
+    done
 
-	make -C "$builddir-lloadd"/servers/lloadd DESTDIR="$pkgdir" install
+    make -C "$builddir-lloadd"/servers/lloadd DESTDIR="$pkgdir" install
 
-	cd "$pkgdir"
+    cd "$pkgdir"
 
-	rmdir var/lib/openldap/run
+    # Fix tools symlinks to slapd.
+    find usr/sbin/ -type l -exec ln -sf slapd {} \;
 
-	# Fix tools symlinks to slapd.
-	find usr/sbin/ -type l -exec ln -sf slapd {} \;
+    # Move executables from lib to sbin.
+    mv usr/lib/slapd usr/lib/lloadd usr/sbin/
 
-	# Move executables from lib to sbin.
-	mv usr/lib/slapd usr/lib/lloadd usr/sbin/
+    # Move *.default configs to docs.
+    mkdir -p usr/share/doc/$pkgname
+    mv etc/openldap/*.default usr/share/doc/$pkgname/
 
-	# Move *.default configs to docs.
-	mkdir -p usr/share/doc/$pkgname
-	mv etc/openldap/*.default usr/share/doc/$pkgname/
+    chgrp ldap etc/openldap/slapd.*
+    chmod g+r etc/openldap/slapd.*
 
-	chgrp ldap etc/openldap/slapd.*
-	chmod g+r etc/openldap/slapd.*
+    install -D -m 640 -g ldap "$srcdir"/lloadd.conf -t etc/openldap/
 
-	install -D -m 640 -g ldap "$srcdir"/lloadd.conf -t etc/openldap/
+    install -d -m 700 -o ldap -g ldap \
+        run/openldap \
+        var/lib/openldap \
+        var/lib/openldap/openldap-data \
+        var/lib/openldap/openldap-lloadd \
+        etc/openldap/slapd.d
 
-	install -d -m 700 -o ldap -g ldap \
-		run/openldap \
-		var/lib/openldap \
-		var/lib/openldap/openldap-data \
-		var/lib/openldap/openldap-lloadd \
-		etc/openldap/slapd.d
+    install -D -m 755 "$srcdir"/slapd.initd etc/init.d/slapd
+    install -D -m 644 "$srcdir"/slapd.confd etc/conf.d/slapd
 
-	install -D -m 755 "$srcdir"/slapd.initd etc/init.d/slapd
-	install -D -m 644 "$srcdir"/slapd.confd etc/conf.d/slapd
-
-	install -D -m 755 "$srcdir"/lloadd.initd etc/init.d/lloadd
-	install -D -m 644 "$srcdir"/lloadd.confd etc/conf.d/lloadd
+    install -D -m 755 "$srcdir"/lloadd.initd etc/init.d/lloadd
+    install -D -m 644 "$srcdir"/lloadd.confd etc/conf.d/lloadd
 }
 
 libldap() {
-	pkgdesc="OpenLDAP libraries"
-	depends=""
+    pkgdesc="OpenLDAP libraries"
+    depends=""
 
-	amove usr/lib/*lber.so*
-	amove usr/lib/*ldap.so*
-	amove etc/openldap/ldap.conf
+    amove usr/lib/*lber.s*
+    amove usr/lib/*ldap.s*
+    amove etc/openldap/ldap.conf
 }
 
 slapi() {
-        pkgdesc="OpenLDAP SLAPI Library"
-        depends="$pkgname"
+    pkgdesc="OpenLDAP SLAPI Library"
+    depends="$pkgname"
 
-        amove usr/lib/libslapi.s*
+    amove usr/lib/libslapi.s*
 }
 
 lloadd() {
-	pkgdesc="Standalone LDAP Load Balancer Daemon"
+    pkgdesc="Standalone LDAP Load Balancer Daemon"
 
-	amove etc/openldap/lloadd.conf
-	amove usr/sbin/lloadd
-	amove var/lib/openldap/openldap-lloadd
+    amove etc/openldap/lloadd.conf
+    amove usr/sbin/lloadd
+    amove var/lib/openldap/openldap-lloadd
 }
 
 lloadd_openrc() {
-	pkgdesc="Standalone LDAP Load Balancer Daemon (OpenRC init scripts)"
-	depends="$depends_openrc"
-	install_if="openrc $pkgname-lloadd=$pkgver-r$pkgrel"
+    pkgdesc="Standalone LDAP Load Balancer Daemon (OpenRC init scripts)"
+    depends="$depends_openrc"
+    install_if="openrc $pkgname-lloadd=$pkgver-r$pkgrel"
 
-	amove etc/init.d/lloadd
-	amove etc/conf.d/lloadd
+    amove etc/init.d/lloadd
+    amove etc/conf.d/lloadd
 }
 
 clients() {
-	pkgdesc="LDAP client utilities"
+    pkgdesc="LDAP client utilities"
 
-	amove usr/bin
+    amove usr/bin
 }
 
 passwd_argon2() {
-	pkgdesc="Argon2 OpenLDAP support"
-	depends="$pkgname"
+    pkgdesc="Argon2 OpenLDAP support"
+    depends="$pkgname"
 
-	amove usr/lib/openldap/argon2.*
+    amove usr/lib/openldap/argon2.s*
 }
 
 passwd_pbkdf2() {
-	pkgdesc="PBKDF2 OpenLDAP support"
-	depends="$pkgname"
+    pkgdesc="PBKDF2 OpenLDAP support"
+    depends="$pkgname"
 
-	amove usr/lib/openldap/pw-pbkdf2.*
+    amove usr/lib/openldap/pw-pbkdf2.s*
 }
 
 passwd_sha2() {
-	pkgdesc="SHA2 OpenLDAP support"
-	depends="$pkgname"
+    pkgdesc="SHA2 OpenLDAP support"
+    depends="$pkgname"
 
-	amove usr/lib/openldap/pw-sha2.*
+    amove usr/lib/openldap/pw-sha2.s*
 }
 
 _backend_all() {
-	pkgdesc="Virtual package that installs all OpenLDAP backends"
-	depends="$_backend_pkgs"
+    pkgdesc="Virtual package that installs all OpenLDAP backends"
+    depends="$_backend_pkgs"
 
-	mkdir -p "$subpkgdir"
+    mkdir -p "$subpkgdir"
 }
 
 _overlay_all() {
-	pkgdesc="Virtual package that installs all OpenLDAP overlays"
-	depends="$_overlay_pkgs"
+    pkgdesc="Virtual package that installs all OpenLDAP overlays"
+    depends="$_overlay_pkgs"
 
-	mkdir -p "$subpkgdir"
+    mkdir -p "$subpkgdir"
 }
 
 _backend() {
-	backend_name="${subpkgname#openldap-back-}"
-	pkgdesc="OpenLDAP $backend_name backend"
+    backend_name="${subpkgname#openldap-back-}"
+    pkgdesc="OpenLDAP $backend_name backend"
 
-	case "$backend_name" in
-		lload) pkgdesc="OpenLDAP load balancer backend (module)";;
-		*) backend_name="back_$backend_name";;
-	esac
+    case "$backend_name" in
+        lload) pkgdesc="OpenLDAP load balancer backend (module)";;
+        *) backend_name="back_$backend_name";;
+    esac
 
-	amove usr/lib/openldap/$backend_name*
+    amove usr/lib/openldap/$backend_name*.s*
 }
 
 _overlay() {
-	overlay_name="${subpkgname#openldap-overlay-}"
-	pkgdesc="OpenLDAP $overlay_name overlay"
+    overlay_name="${subpkgname#openldap-overlay-}"
+    pkgdesc="OpenLDAP $overlay_name overlay"
 
-	case "$overlay_name" in
-		proxycache)
-			overlay_name=pcache
-		;;
-		mqtt)
-			# For backward compatibility (Alpine <3.15).
-			provides="$pkgname-mqtt=$pkgver-r$pkgrel"
-			replaces="$pkgname-mqtt"
-		;;
-	esac
-	amove usr/lib/openldap/$overlay_name*
+    case "$overlay_name" in
+        proxycache)
+            overlay_name=pcache
+        ;;
+        mqtt)
+            # For backward compatibility (Alpine <3.15).
+            provides="$pkgname-mqtt=$pkgver-r$pkgrel"
+            replaces="$pkgname-mqtt"
+        ;;
+    esac
+
+    amove usr/lib/openldap/$overlay_name*.s*
 }
 
 sha512sums="
